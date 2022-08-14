@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package internal;
+option go_package = "./proto";
+
+service History {
+  rpc GetHistory(RequestMessage) returns (ResponseMessage){}
+}
+
+message RequestMessage{
+  string subject = 1;
+  google.protobuf.Timestamp from = 2;
+  google.protobuf.Timestamp to = 3;
+}
+
+message pair {
+  float value = 1;
+  string time = 2;
+}
+
+message ResponseMessage {
+  repeated pair p = 1;
+}
