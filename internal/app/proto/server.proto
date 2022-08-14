@@ -17,7 +17,7 @@ message RequestMessage{
 
 message pair {
   float value = 1;
-  string time = 2;
+  google.protobuf.Timestamp time = 2;
 }
 
 message ResponseMessage {
