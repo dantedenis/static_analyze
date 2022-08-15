@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"github.com/fasthttp/router"
 	"github.com/valyala/fasthttp"
 	"log"
@@ -24,11 +25,15 @@ func NewServer(serv indic.Get) *Server {
 	return s
 }
 
-func (s *Server) Run() error {
+func (s *Server) Run(ctx context.Context) (err error) {
 	port := os.Getenv("SERV_PORT")
 	log.Println("Service will be started on", port)
 
-	return fasthttp.ListenAndServe(port, s.fastRouter.Handler)
+	go func() {
+		err = fasthttp.ListenAndServe(port, s.fastRouter.Handler)
+	}()
+	<-ctx.Done()
+	return err
 }
 
 func (s *Server) configureRouter() {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"log"
@@ -49,7 +50,8 @@ func main() {
 	}()
 
 	serv := api.NewServer(Result)
-	err = serv.Run()
+
+	err = serv.Run(context.Background())
 	if err != nil {
 		log.Fatalln(err)
 	}
