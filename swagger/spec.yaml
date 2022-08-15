@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'localhost:8090'
+paths:
+  /health:
+    get:
+      description: Returns status 200
+      responses:
+        '200':
+          description: server health responses
+        '405':
+          description: Method Not Allowed
+          content:
+            'application/json': { }
+  /parameters:
+    get:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/internal/app/api/controllers'
+      responses:
+        '200':
+          description: A response object.
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/internal/app/api/controllers'
+        '400':
+          description: A error requestBody and message response
+        '405':
+          description: Method Not Allowed
