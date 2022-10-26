@@ -6,5 +6,7 @@ type Indicator struct {
 	Low    float32 `json:"low"`
 	Close  float32 `json:"close"`
 	Group  int64   `json:"-"`
-	Period string  `json:"period"`
+	Period string  `json:"-"`
+	Start  string  `json:"period_start"`
+	End    string  `json:"period_end"`
 }

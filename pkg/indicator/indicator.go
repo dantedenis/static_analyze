@@ -119,7 +119,7 @@ func (r *RowMapIndicator) Updater() error {
 					temp.Open, temp.Close = value[0].Value, value[len(value)-1].Value
 					temp.Low, temp.High = getMinMax(value)
 
-					temp.Period = periodToString(t1, temp.Group, t/60)
+					temp.Start, temp.End = periodToString(t1, temp.Group, t/60)
 					result = append(result, temp)
 				}
 				sort.Slice(result, func(i, j int) bool {
@@ -135,8 +135,8 @@ func (r *RowMapIndicator) Updater() error {
 	return err
 }
 
-func periodToString(t time.Time, group, c int64) string {
-	return fmt.Sprintf("[%s] ... [%s]", time.Unix(t.Unix()+group*c, 0).String(), time.Unix(t.Unix()+(group+1)*c, 0).String())
+func periodToString(t time.Time, group, c int64) (start, end string) {
+	return time.Unix(t.Unix()+group*c, 0).String(), time.Unix(t.Unix()+(group+1)*c, 0).String()
 }
 
 func getMinMax(values []*proto.Pair) (min, max float32) {
